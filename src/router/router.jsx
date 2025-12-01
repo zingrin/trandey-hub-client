@@ -8,6 +8,7 @@ import Gadget from "../pages/Gadget";
 import Jewellery from "../pages/Jewellery";
 import Beauty from "../pages/Beauty";
 import Blogs from "../pages/Blogs";
+import TrendyProducts from "../components/TrendayProducts";
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />
+      },
+       {
+        path: "trendy-products",
+        element: <TrendyProducts />,
       },
       {
         path: "shop",
