@@ -3,10 +3,8 @@ import React from "react";
 export default function HeroSection() {
   return (
     <div className="w-full relative -mt-10 md:-mt-14 lg:-mt-16">
-
       {/* MAIN WRAPPER */}
       <div className="w-full h-[65vh] md:h-[80vh] lg:h-[95vh] overflow-hidden carousel">
-
         {/* ---------------- SLIDE 1 ---------------- */}
         <div id="slide1" className="carousel-item relative w-full h-full">
           <img
@@ -33,10 +31,10 @@ export default function HeroSection() {
             </p>
 
             <button
-              className="mt-4 md:mt-6 
-                         px-4 md:px-6 py-2 md:py-3 
-                         border border-black hover:bg-black hover:text-white 
-                         transition flex items-center gap-2 text-sm md:text-base"
+              onClick={() => (window.location.href = "/collections")}
+              className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 
+             border border-black hover:bg-black hover:text-white 
+             transition flex items-center gap-2 text-sm md:text-base"
             >
               Browse Collection →
             </button>
@@ -45,13 +43,13 @@ export default function HeroSection() {
           {/* ARROWS */}
           <a
             href="#slide3"
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-pink-400 text-3xl md:text-4xl"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 text-3xl md:text-4xl"
           >
             ❮
           </a>
           <a
             href="#slide2"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 text-3xl md:text-4xl"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 text-3xl md:text-4xl"
           >
             ❯
           </a>
@@ -74,7 +72,7 @@ export default function HeroSection() {
                        shadow rounded"
           >
             <h1 className="text-2xl md:text-4xl lg:text-5xl font-light leading-tight">
-              Meaningful <span className="text-pink-400">Accessories</span>
+              Meaningful <span className="text-blue-400">Accessories</span>
               <br /> For Every Moment
             </h1>
 
@@ -83,10 +81,10 @@ export default function HeroSection() {
             </p>
 
             <button
-              className="mt-4 md:mt-6 
-                         px-4 md:px-6 py-2 md:py-3 
-                         border border-black hover:bg-black hover:text-white 
-                         transition flex items-center gap-2 text-sm md:text-base"
+              onClick={() => (window.location.href = "/collections")}
+              className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 
+             border border-black hover:bg-black hover:text-white 
+             transition flex items-center gap-2 text-sm md:text-base"
             >
               View Collection →
             </button>
@@ -94,13 +92,13 @@ export default function HeroSection() {
 
           <a
             href="#slide1"
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-pink-400 text-3xl md:text-4xl"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 text-3xl md:text-4xl"
           >
             ❮
           </a>
           <a
             href="#slide3"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 text-3xl md:text-4xl"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 text-3xl md:text-4xl"
           >
             ❯
           </a>
@@ -131,10 +129,10 @@ export default function HeroSection() {
             </p>
 
             <button
-              className="mt-4 md:mt-6 
-                         px-4 md:px-6 py-2 md:py-3 
-                         border border-black hover:bg-black hover:text-white 
-                         transition flex items-center gap-2 text-sm md:text-base"
+              onClick={() => (window.location.href = "/collections")}
+              className="mt-4 md:mt-6 px-4 md:px-6 py-2 md:py-3 
+             border border-black hover:bg-black hover:text-white 
+             transition flex items-center gap-2 text-sm md:text-base"
             >
               View Collection →
             </button>
@@ -142,13 +140,13 @@ export default function HeroSection() {
 
           <a
             href="#slide2"
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-pink-400 text-3xl md:text-4xl"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 text-3xl md:text-4xl"
           >
             ❮
           </a>
           <a
             href="#slide1"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-400 text-3xl md:text-4xl"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 text-3xl md:text-4xl"
           >
             ❯
           </a>
@@ -157,9 +155,9 @@ export default function HeroSection() {
 
       {/* DOTS */}
       <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
-        <a href="#slide1" className="w-3 h-3 rounded-full bg-pink-300"></a>
-        <a href="#slide2" className="w-3 h-3 rounded-full bg-pink-400"></a>
-        <a href="#slide3" className="w-3 h-3 rounded-full bg-pink-300"></a>
+        <a href="#slide1" className="w-3 h-3 rounded-full bg-blue-300"></a>
+        <a href="#slide2" className="w-3 h-3 rounded-full bg-blue-400"></a>
+        <a href="#slide3" className="w-3 h-3 rounded-full bg-blue-300"></a>
       </div>
     </div>
   );

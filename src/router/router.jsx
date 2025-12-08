@@ -3,53 +3,83 @@ import MainLayouts from "../layouts/MainLayouts";
 
 import Home from "../pages/Home";
 import Shop from "../pages/Shop";
-import Collection from "../pages/Collection";
 import Gadget from "../pages/Gadget";
 import Jewellery from "../pages/Jewellery";
 import Beauty from "../pages/Beauty";
-import Blogs from "../pages/Blogs";
 import TrendyProducts from "../components/TrendayProducts";
-
+import Collections from "../pages/Collections";
+import ErrorPage from "../components/ErrorPage";
+import ProductDetails from "../pages/ProductDetails";
+import ProductsPage from "../components/ProductsPage";
+import BestSellerPage from "../pages/BestSellerPage";
+import SalePage from "../pages/salePages";
+import BlogDetails from "../pages/BlogDetails";
+import Pages from "../components/Pages";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayouts />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
       },
-       {
+      {
         path: "trendy-products",
         element: <TrendyProducts />,
       },
       {
         path: "shop",
-        element: <Shop />
+        element: <Shop />,
       },
       {
-        path: "collection",
-        element: <Collection />
+        path: "collections",
+        element: <Collections />,
       },
       {
         path: "gadget",
-        element: <Gadget />
+        element: <Gadget />,
       },
       {
         path: "jewellery",
-        element: <Jewellery />
+        element: <Jewellery />,
       },
       {
         path: "beauty",
-        element: <Beauty />
+        element: <Beauty />,
       },
       {
-        path: "blogs",
-        element: <Blogs />
-      }
-    ]
-  }
+        path: "pages",
+        element: <Pages />,
+      },
+      {
+          path: "collection",
+          element:<Collections/>
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/products",
+        element: <ProductsPage />,
+      },
+      {
+        path: "/best-seller",
+        element: <BestSellerPage />,
+      },
+      {
+        path: "/sale",
+        element: <SalePage />,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetails />,
+      },
+    ],
+  },
 ]);
 
 export default router;

@@ -7,48 +7,36 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Detect Scroll
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 120);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Dynamic Links Array
   const navLinks = [
-    { label: "Home", to: "/", active: "text-pink-500" },
+    { label: "Home", to: "/", active: "text-[#2796B8]" },
     { label: "Shop ▾", to: "/shop" },
     { label: "Collection ▾", to: "/collection" },
     { label: "Gadget", to: "/gadget" },
     { label: "Jewellery", to: "/jewellery" },
     { label: "Health & Beauty", to: "/beauty" },
-    { label: "Blogs ▾", to: "/blogs" },
+    { label: "Pages ▾", to: "/pages" },
   ];
 
   return (
     <div className="w-full">
-      {/* ----------- TOP PINK BAR ----------- */}
+      {/* ----------- TOP BLUE BAR ----------- */}
       {!isScrolled && (
-        <div className="w-full bg-[#f5738a] text-white py-3 px-4 md:px-10 flex flex-wrap justify-between text-xs md:text-sm">
-          {/* Left Email + Phone */}
+        <div className="w-full bg-[#2796B8] text-white py-3 px-4 md:px-10 flex flex-wrap justify-between text-xs md:text-sm">
           <div className="flex items-center ml-28 gap-6 w-full md:w-auto justify-center">
             <span className="flex items-center gap-1">📧 info@example.com</span>
-            <span className="flex items-center gap-1">
-              📞 0000 - 123 - 456789
-            </span>
+            <span className="flex items-center gap-1">📞 0000 - 123 - 456789</span>
           </div>
 
-          {/* Right Links */}
           <div className="flex mr-35 items-center gap-6 w-full md:w-auto justify-center mt-2 md:mt-0">
-            <span className="hidden md:block cursor-pointer">
-              Store Location
-            </span>
-            <span className="hidden md:block cursor-pointer">
-              Track Your Order
-            </span>
-            <span className="flex items-center gap-1 cursor-pointer">
-              USD ▾
-            </span>
+            <span className="hidden md:block cursor-pointer">Store Location</span>
+            <span className="hidden md:block cursor-pointer">Track Your Order</span>
+            <span className="flex items-center gap-1 cursor-pointer">USD ▾</span>
           </div>
         </div>
       )}
@@ -56,16 +44,16 @@ export default function Navbar() {
       {/* ----------- SEARCH + LOGO + ICONS ----------- */}
       {!isScrolled && (
         <div className="w-full bg-white py-5 md:py-8 flex flex-wrap justify-between items-center px-4 md:px-10 border-b border-gray-200">
-          {/* Search Box */}
 
+          {/* Search Box */}
           <div className="w-[200px] md:w-[250px] ml-25 order-3 md:order-1 mt-4 md:mt-0">
-            <div className="border border-pink-300 rounded-md flex items-center px-3 py-1.5">
+            <div className="border border-[#2796B8] rounded-md flex items-center px-3 py-1.5">
               <input
                 type="text"
                 placeholder="Search"
                 className="w-full outline-none text-gray-600 text-sm"
               />
-              <IoSearch className="text-lg text-gray-500 hover:text-pink-500 cursor-pointer transition" />
+              <IoSearch className="text-lg text-gray-500 hover:text-[#2796B8] cursor-pointer transition" />
             </div>
           </div>
 
@@ -82,19 +70,14 @@ export default function Navbar() {
 
             <span className="relative">
               🛒
-              <span className="absolute -top-2 -right-3 text-xs bg-black text-white rounded-full px-1">
-                0
-              </span>
+              <span className="absolute -top-2 -right-3 text-xs bg-black text-white rounded-full px-1">0</span>
             </span>
 
             <span className="relative">
               ❤️
-              <span className="absolute -top-2 -right-3 text-xs border border-black rounded-full px-1">
-                0
-              </span>
+              <span className="absolute -top-2 -right-3 text-xs border border-black rounded-full px-1">0</span>
             </span>
 
-            {/* Mobile Menu Button */}
             <button
               className="md:hidden text-3xl"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -111,14 +94,13 @@ export default function Navbar() {
           isScrolled ? "top-0 py-4" : "top-[250px] md:top-[180px] py-4"
         }`}
       >
-        {/* Desktop Menu */}
         <div className="hidden md:flex justify-center gap-12 text-lg font-light">
           {navLinks.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                isActive ? item.active : "hover:text-pink-400"
+                isActive ? item.active : "hover:text-[#2796B8]"
               }
             >
               {item.label}
@@ -135,7 +117,9 @@ export default function Navbar() {
               <NavLink
                 key={item.to}
                 to={item.to}
-                className={({ isActive }) => (isActive ? "text-pink-500" : "")}
+                className={({ isActive }) =>
+                  isActive ? "text-[#2796B8]" : ""
+                }
               >
                 {item.label}
               </NavLink>
@@ -144,7 +128,6 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* Spacer */}
       <div className={isScrolled ? "h-8" : "h-[100px]"}></div>
     </div>
   );
