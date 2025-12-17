@@ -1,134 +1,213 @@
-import { useState, useEffect } from "react";
-import { NavLink, Link } from "react-router";
-import Logo from "../pages/Logo";
+import React, { useState } from "react";
+import { FaPhoneAlt, FaBars, FaRegHeart, FaRegUser } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
+import { Link, NavLink } from "react-router";
+import Logo from "../pages/Logo";
+import { FiShoppingCart } from "react-icons/fi";
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 120);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const navLinks = [
-    { label: "Home", to: "/", active: "text-[#2796B8]" },
-    { label: "Shop ▾", to: "/shop" },
-    { label: "Collection ▾", to: "/collection" },
-    { label: "Gadget", to: "/gadget" },
-    { label: "Jewellery", to: "/jewellery" },
-    { label: "Health & Beauty", to: "/beauty" },
-    { label: "Pages ▾", to: "/pages" },
-  ];
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="w-full">
-      {/* ----------- TOP BLUE BAR ----------- */}
-      {!isScrolled && (
-        <div className="w-full bg-[#2796B8] text-white py-3 px-4 md:px-10 flex flex-wrap justify-between text-xs md:text-sm">
-          <div className="flex items-center ml-28 gap-6 w-full md:w-auto justify-center">
-            <span className="flex items-center gap-1">📧 info@example.com</span>
-            <span className="flex items-center gap-1">📞 0000 - 123 - 456789</span>
-          </div>
+    <div className="w-full shadow-md sticky top-0 z-50 bg-white">
+      {/* TOP BAR */}
+      <div className="w-full bg-[#447db3] border-b py-3 px-4 md:px-6 flex items-center justify-between">
+        {/* Mobile Menu Button */}
+        <button className="md:hidden text-2xl" onClick={() => setOpen(true)}>
+          <FaBars />
+        </button>
 
-          <div className="flex mr-35 items-center gap-6 w-full md:w-auto justify-center mt-2 md:mt-0">
-            <span className="hidden md:block cursor-pointer">Store Location</span>
-            <span className="hidden md:block cursor-pointer">Track Your Order</span>
-            <span className="flex items-center gap-1 cursor-pointer">USD ▾</span>
-          </div>
+        {/* Left Contact */}
+        <div className="hidden md:flex items-center gap-2 text-white font-medium ml-30">
+          <FaPhoneAlt className="text-red-600" />
+          <span>+022 319 821 967</span>
         </div>
-      )}
 
-      {/* ----------- SEARCH + LOGO + ICONS ----------- */}
-      {!isScrolled && (
-        <div className="w-full bg-white py-5 md:py-8 flex flex-wrap justify-between items-center px-4 md:px-10 border-b border-gray-200">
+        {/* marque */}
+        <div className="overflow-hidden whitespace-nowrap">
+          <h1 className="text-xl md:text-3xl font-bold text-white inline-block animate-marquee">
+            ✨ Discover Our Best Deals & New Arrivals ✨
+          </h1>
+        </div>
 
-          {/* Search Box */}
-          <div className="w-[200px] md:w-[250px] ml-25 order-3 md:order-1 mt-4 md:mt-0">
-            <div className="border border-[#2796B8] rounded-md flex items-center px-3 py-1.5">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full outline-none text-gray-600 text-sm"
-              />
-              <IoSearch className="text-lg text-gray-500 hover:text-[#2796B8] cursor-pointer transition" />
-            </div>
-          </div>
+        {/* Right Icons */}
 
-          {/* Logo */}
-          <div className="w-full md:w-auto order-1 text-center mb-4 md:mb-0 h-[80px] flex items-center justify-center">
-            <Link to="/">
-              <Logo />
-            </Link>
-          </div>
+        <div className="flex items-center gap-4 md:gap-6 text-white text-xl mr-30">
+          <FaRegHeart />
 
-          {/* Icons */}
-          <div className="w-full mr-32 md:w-auto order-2 md:order-3 flex justify-center md:justify-end items-center gap-6 text-xl md:text-2xl">
-            <span>👤</span>
-
-            <span className="relative">
-              🛒
-              <span className="absolute -top-2 -right-3 text-xs bg-black text-white rounded-full px-1">0</span>
+          <div className="relative">
+            <FiShoppingCart />
+            <span className="absolute -top-2 -right-2 bg-[#447db3] text-white text-xs px-1 rounded-full">
+              3
             </span>
-
-            <span className="relative">
-              ❤️
-              <span className="absolute -top-2 -right-3 text-xs border border-black rounded-full px-1">0</span>
-            </span>
-
-            <button
-              className="md:hidden text-3xl"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              ☰
-            </button>
           </div>
-        </div>
-      )}
 
-      {/* ----------- MAIN NAVBAR ----------- */}
-      <nav
-        className={`w-full bg-white shadow-sm fixed left-0 z-50 transition-all duration-300 border-b border-gray-200 ${
-          isScrolled ? "top-0 py-4" : "top-[250px] md:top-[180px] py-4"
-        }`}
-      >
-        <div className="hidden md:flex justify-center gap-12 text-lg font-light">
-          {navLinks.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                isActive ? item.active : "hover:text-[#2796B8]"
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          <FaRegUser />
         </div>
-      </nav>
+      </div>
 
-      {/* ----------- MOBILE MENU ----------- */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-b shadow px-6 py-4 fixed top-[250px] w-full z-40">
-          <div className="flex flex-col gap-4 text-lg">
-            {navLinks.map((item) => (
+      {/* MAIN NAVBAR */}
+      <div className="w-full  h-[60px] md:h-[70px] bg-base-200 text-gray-600 py-4 px-4 md:px-6 flex items-center justify-between">
+        {/* LOGO */}
+        <div className="flex items-center ml-30">
+          <Link to="/">
+            <Logo className="w-8 h-8 md:w-20 cursor-pointer" />
+          </Link>
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-10 font-medium">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#447db3] border-b-2 border-[#447db3] pb-1"
+                : "hover:text-gray-200"
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/shop"
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#447db3] border-b-2 border-[#447db3] pb-1"
+                : "hover:text-gray-200"
+            }
+          >
+            Shop
+          </NavLink>
+
+          <NavLink
+            to="/catalog"
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#447db3] border-b-2 border-[#447db3] pb-1"
+                : "hover:text-gray-200"
+            }
+          >
+            Catalog
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#447db3] border-b-2 border-[#447db3] pb-1"
+                : "hover:text-gray-200"
+            }
+          >
+            About
+          </NavLink>
+
+          <NavLink
+            to="/blog"
+            className={({ isActive }) =>
+              isActive
+                ? "text-[#447db3] border-b-2 border-[#447db3] pb-1"
+                : "hover:text-gray-200"
+            }
+          >
+            Blog
+          </NavLink>
+        </div>
+
+        {/* Search */}
+        <div className="hidden md:flex items-center bg-white rounded-lg px-3 py-2 text-black w-72">
+          <input
+            type="text"
+            placeholder="Search product"
+            className="w-full outline-none bg-transparent"
+          />
+          <IoSearch className="text-xl" />
+        </div>
+      </div>
+
+      {/* MOBILE DRAWER */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="absolute left-0 top-0 h-full w-64 bg-[#447db3] text-white p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-2xl font-semibold mb-6">Menu</h2>
+
+            <nav className="flex flex-col gap-4 text-lg">
               <NavLink
-                key={item.to}
-                to={item.to}
+                to="/"
+                onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  isActive ? "text-[#2796B8]" : ""
+                  isActive
+                    ? "text-[#447db3] font-semibold"
+                    : "hover:text-gray-200"
                 }
               >
-                {item.label}
+                Home
               </NavLink>
-            ))}
+
+              <NavLink
+                to="/shop"
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#447db3] font-semibold"
+                    : "hover:text-gray-200"
+                }
+              >
+                Shop
+              </NavLink>
+
+              <NavLink
+                to="/catalog"
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#447db3] font-semibold"
+                    : "hover:text-gray-200"
+                }
+              >
+                Catalog
+              </NavLink>
+
+              <NavLink
+                to="/about"
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#447db3] font-semibold"
+                    : "hover:text-gray-200"
+                }
+              >
+                About
+              </NavLink>
+
+              <NavLink
+                to="/blog"
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-[#447db3] font-semibold"
+                    : "hover:text-gray-200"
+                }
+              >
+                Blog
+              </NavLink>
+            </nav>
+
+            <div className="mt-6">
+              <input
+                type="text"
+                placeholder="Search..."
+                className=" p-2 rounded bg-white border-b-blue-500 text-black"
+              />
+            </div>
           </div>
         </div>
       )}
-
-      <div className={isScrolled ? "h-8" : "h-[100px]"}></div>
     </div>
   );
 }

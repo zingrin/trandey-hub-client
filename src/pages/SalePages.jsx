@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { products } from "../data/productsData";
-import ProductCard from "../components/ProductCard";
+import BestSellerCard from "../components/BestSellerCard";
 
 const SalePage = () => {
   const saleProducts = products.filter((p) => p.type === "sale");
@@ -20,7 +20,7 @@ const SalePage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {currentProducts.map((p) => (
-          <ProductCard key={p.id} {...p} />
+          <BestSellerCard key={p.id} {...p} />
         ))}
       </div>
 

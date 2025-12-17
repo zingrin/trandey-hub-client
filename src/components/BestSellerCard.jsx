@@ -1,4 +1,4 @@
-const ProductCard = ({ image, name, oldPrice, newPrice }) => {
+const BestSellerCard = ({ image, name, oldPrice, newPrice }) => {
   return (
     <div className="rounded-xl p-4 bg-transparent border border-gray-200 hover:shadow-md duration-300">
       <div className="relative w-full h-60 bg-gray-50 rounded-lg overflow-hidden">
@@ -24,4 +24,4 @@ const ProductCard = ({ image, name, oldPrice, newPrice }) => {
   );
 };
 
-export default ProductCard;
+export default BestSellerCard;

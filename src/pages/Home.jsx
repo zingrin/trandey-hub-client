@@ -1,20 +1,24 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection';
-import ProductsPage from '../components/ProductsPage';
-import CollectionSection from '../components/CollectSection';
-import TrendyHero from '../components/TrendyHero';
 import Features from './Features';
 import Newsletter from '../components/Newsletter';
-import BlogSection from './BlogSection';
+import PremiumCollection from '../components/PremiumCollection';
+import BestSeller from '../components/BestSeller';
+import TrendingProducts from '../components/TrendingProducts';
+import PopularProducts from '../components/PopularProducts';
+
+
 
 const Home = () => {
     return (
         <div>
            <HeroSection/>
-           <CollectionSection/>
-           <ProductsPage/>
-           <TrendyHero/>
-           <BlogSection/>
+           <PremiumCollection/>
+           <BestSeller/>
+           <TrendingProducts/>
+           <PopularProducts/>
+           {/* <TrendyHero/> */}
+           {/* <BlogSection/> */}
            <Features/>
            {/* <TrendayProducts/> */}
            <Newsletter/>

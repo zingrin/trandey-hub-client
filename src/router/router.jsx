@@ -6,15 +6,14 @@ import Shop from "../pages/Shop";
 import Gadget from "../pages/Gadget";
 import Jewellery from "../pages/Jewellery";
 import Beauty from "../pages/Beauty";
-import TrendyProducts from "../components/TrendayProducts";
 import Collections from "../pages/Collections";
 import ErrorPage from "../components/ErrorPage";
 import ProductDetails from "../pages/ProductDetails";
-import ProductsPage from "../components/ProductsPage";
 import BestSellerPage from "../pages/BestSellerPage";
 import SalePage from "../pages/salePages";
 import BlogDetails from "../pages/BlogDetails";
 import Pages from "../components/Pages";
+import BestSeller from "../components/BestSeller";
 
 const router = createBrowserRouter([
   {
@@ -26,10 +25,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      {
-        path: "trendy-products",
-        element: <TrendyProducts />,
-      },
+      // {
+      //   path: "trendy-products",
+      //   element: <TrendyProducts />,
+      // },
       {
         path: "shop",
         element: <Shop />,
@@ -59,12 +58,12 @@ const router = createBrowserRouter([
           element:<Collections/>
       },
       {
-        path: "/product/:id",
+        path: "product/:id",
         element: <ProductDetails />,
       },
       {
-        path: "/products",
-        element: <ProductsPage />,
+        path: "/bestseller",
+        element: <BestSeller />,
       },
       {
         path: "/best-seller",
