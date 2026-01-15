@@ -14,6 +14,7 @@ import SalePage from "../pages/salePages";
 import BlogDetails from "../pages/BlogDetails";
 import Pages from "../components/Pages";
 import BestSeller from "../components/BestSeller";
+import About from "../pages/About";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "shop",
         element: <Shop />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
       {
         path: "collections",
