@@ -2,13 +2,20 @@
 @plugin "daisyui";
 @keyframes marquee {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
 .animate-marquee {
-  animation: marquee 12s linear infinite;
+  display: flex;
+  width: max-content;
+  /* 25s থেকে বাড়িয়ে 60s করা হয়েছে যাতে অনেক স্লো চলে */
+  animation: marquee 60s linear infinite; 
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
