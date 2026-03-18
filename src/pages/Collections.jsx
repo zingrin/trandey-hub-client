@@ -1,79 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function CollectionsPage() {
-  const allProducts = [
-    {
-      id: 1,
-      title: "Smart Wireless Earbuds",
-      category: "Gadget",
-      price: 1590,
-      img: "https://i.ibb.co/8x7h9m8/earbuds.jpg",
-      desc: "Experience crystal-clear sound with high-quality bass.",
-    },
-    {
-      id: 2,
-      title: "Luxury Skincare Serum",
-      category: "Beauty",
-      price: 1250,
-      img: "https://i.ibb.co/8XW3pW2/serum.jpg",
-      desc: "Nourish your skin with deep hydration and glow boost.",
-    },
-    {
-      id: 3,
-      title: "Elegant Gold Bracelet",
-      category: "Jewellery",
-      price: 2190,
-      img: "https://i.ibb.co/8NyQXwv/bracelet.jpg",
-      desc: "Minimal, classy and perfect for any outfit.",
-    },
-    {
-      id: 4,
-      title: "Digital Blood Pressure Monitor",
-      category: "Health",
-      price: 1890,
-      img: "https://i.ibb.co/Jt5XcDK/bp.jpg",
-      desc: "Keep track of your daily health with accurate readings.",
-    },
-    {
-      id: 5,
-      title: "Kitchen Multipurpose Blender",
-      category: "Kitchen",
-      price: 2490,
-      img: "https://i.ibb.co/MVwVvgp/blender.jpg",
-      desc: "Blend everything—juice, smoothies, spices, whatever you want.",
-    },
-    {
-      id: 6,
-      title: "Smart Fitness Band",
-      category: "Gadget",
-      price: 1690,
-      img: "https://i.ibb.co/bvQNK1M/fitnessband.jpg",
-      desc: "Track your steps, calories, heart rate and more.",
-    },
-    {
-      id: 7,
-      title: "Organic Face Cleanser",
-      category: "Beauty",
-      price: 990,
-      img: "https://i.ibb.co/1sW0sX5/cleanser.jpg",
-      desc: "Smooth, gentle and refreshing for all skin types.",
-    },
-    {
-      id: 8,
-      title: "Premium Non-stick Frypan",
-      category: "Kitchen",
-      price: 1290,
-      img: "https://i.ibb.co/5hsmH4c/frypan.jpg",
-      desc: "Cook like a pro with high-heat safe non-stick coating.",
-    },
-  ];
-
   // STATES
-  const [products, setProducts] = useState(allProducts);
+  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewType, setViewType] = useState("grid");
 
   const productsPerPage = 6;
+
+  // 🔥 API CALL
+  useEffect(() => {
+    fetch("http://localhost:5000/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setAllProducts(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // Pagination
   const indexOfLast = currentPage * productsPerPage;
@@ -103,13 +48,10 @@ export default function CollectionsPage() {
 
   return (
     <div className="w-full">
-
-      {/* ---------------------------------------------------------------- */}
       {/* ✔ TOP HERO SECTION WITH BACKGROUND IMAGE */}
-      {/* ---------------------------------------------------------------- */}
       <div className="w-full h-[250px] md:h-[350px] lg:h-[420px] relative">
         <img
-          src="https://i.ibb.co/pB7fx0jf/businesspeople-floating-with-suitcase-23-2148186803.jpg"
+          src="https://i.ibb.co.com/4wXk6Pz5/online-trends-53876-167072.jpg"
           className="w-full h-full object-cover"
           alt=""
         />
@@ -121,26 +63,32 @@ export default function CollectionsPage() {
         </div>
       </div>
 
-      {/* ---------------------------------------------------------------- */}
       {/* ✔ MAIN CONTENT */}
-      {/* ---------------------------------------------------------------- */}
       <div className="w-full flex gap-10 px-6 md:px-12 mt-10">
-
         {/* ---------------- LEFT SIDEBAR ---------------- */}
         <div className="w-[25%] hidden md:block">
           <h2 className="text-xl font-semibold mb-4">Category</h2>
 
           <ul className="space-y-3 text-gray-700">
-            <li>Gadget</li>
-            <li>Beauty</li>
-            <li>Jewellery</li>
-            <li>Health</li>
-            <li>Kitchen</li>
+            {["Gadget", "Beauty", "Jewellery", "Health", "Kitchen"].map(
+              (cat) => (
+                <li
+                  key={cat}
+                  className="cursor-pointer transition hover:text-red-500 hover:translate-x-1"
+                  onClick={() => {
+                    setProducts(allProducts.filter((p) => p.category === cat));
+                    setCurrentPage(1);
+                  }}
+                >
+                  {cat}
+                </li>
+              ),
+            )}
           </ul>
 
           <button
             onClick={clearAll}
-            className="mt-6 w-full py-2 bg-pink-400 text-white"
+            className="mt-6 w-full py-2 bg-red-500 text-white rounded hover:bg-red-600 transition cursor-pointer"
           >
             Clear All
           </button>
@@ -148,15 +96,16 @@ export default function CollectionsPage() {
 
         {/* ---------------- RIGHT PRODUCTS ---------------- */}
         <div className="w-full md:w-[75%]">
-
           {/* Header Controls */}
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4">
             {/* VIEW BUTTONS */}
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setViewType("grid")}
-                className={`p-2 border-amber-200 ${
-                  viewType === "grid" ? "bg-pink-300" : ""
+                className={`w-11 h-11 flex items-center justify-center rounded-lg border border-amber-200 text-xl transition ${
+                  viewType === "grid"
+                    ? "bg-amber-200 text-white"
+                    : "bg-white hover:bg-red-100"
                 }`}
               >
                 ▦
@@ -164,8 +113,10 @@ export default function CollectionsPage() {
 
               <button
                 onClick={() => setViewType("list")}
-                className={`p-2 border-b-amber-200 ${
-                  viewType === "list" ? "bg-pink-300" : ""
+                className={`w-11 h-11 flex items-center justify-center rounded-lg border border-amber-200 text-xl transition ${
+                  viewType === "list"
+                    ? "bg-amber-200 text-white"
+                    : "bg-white hover:bg-red-100"
                 }`}
               >
                 ☰
@@ -177,7 +128,7 @@ export default function CollectionsPage() {
               <span className="text-gray-700">Sort By</span>
               <select
                 onChange={(e) => sortProducts(e.target.value)}
-                className="border p-2"
+                className="border border-amber-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
               >
                 <option value="featured">Featured</option>
                 <option value="az">Alphabetically, A-Z</option>
@@ -207,36 +158,49 @@ export default function CollectionsPage() {
                   src={p.img}
                   alt=""
                   className={`object-cover ${
-                    viewType === "list"
-                      ? "w-32 h-32 rounded"
-                      : "w-full h-48"
+                    viewType === "list" ? "w-32 h-32 rounded" : "w-full h-48"
                   }`}
                 />
 
                 <div>
                   <h3 className="mt-3 font-semibold">{p.title}</h3>
                   <p className="text-sm text-gray-500">{p.desc}</p>
-                  <p className="mt-2 font-bold text-pink-500">৳ {p.price}</p>
+                  <p className="mt-2 font-bold text-red-500">৳ {p.price}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-center mt-8 gap-3">
-            {Array.from({ length: pages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-4 py-2 border ${
-                  currentPage === i + 1 ? "bg-pink-400 text-white" : ""
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
+          <div className="flex justify-center mt-16 mb-20 gap-3">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+              className={`px-4 py-1.5 text-sm rounded-full border transition ${
+                currentPage === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-600 hover:bg-red-500 hover:text-white"
+              }`}
+            >
+              Prev
+            </button>
 
+            <span className="flex items-center text-sm text-gray-500">
+              {currentPage} / {pages}
+            </span>
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, pages))}
+              disabled={currentPage === pages}
+              className={`px-4 py-1.5 text-sm rounded-full border transition ${
+                currentPage === pages
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white text-gray-600 hover:bg-red-500 hover:text-white"
+              }`}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

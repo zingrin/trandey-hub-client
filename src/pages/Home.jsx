@@ -20,7 +20,6 @@ const Home = () => {
            {/* <TrendyHero/> */}
            {/* <BlogSection/> */}
            <Features/>
-           {/* <TrendayProducts/> */}
            <Newsletter/>
         </div>
     );

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// ==================== PRODUCT LIST ==================== //
 const products = [
   {
     id: 1,
@@ -131,7 +130,7 @@ const BestSeller = () => {
   const startIndex = (page - 1) * itemsPerPage;
   const currentProducts = filteredProducts.slice(
     startIndex,
-    startIndex + itemsPerPage
+    startIndex + itemsPerPage,
   );
 
   const handleTab = (tab) => {
@@ -155,8 +154,8 @@ const BestSeller = () => {
             onClick={() => handleTab("all")}
             className={`${
               activeTab === "all"
-                ? "text-red-600 border-b-4 border-red-600 pb-1"
-                : "hover:text-red-600"
+                ? "text-red-600 border-b-4 border-red-600 pb-1 cursor-pointer"
+                : "hover:text-red-600  cursor-pointer"
             }`}
           >
             ALL
@@ -166,8 +165,8 @@ const BestSeller = () => {
             onClick={() => handleTab("best")}
             className={`${
               activeTab === "best"
-                ? "text-red-600 border-b-4 border-red-600 pb-1"
-                : "hover:text-red-600"
+                ? "text-red-600 border-b-4 border-red-600 pb-1 cursor-pointer"
+                : "hover:text-red-600  cursor-pointer"
             }`}
           >
             BEST SELLER
@@ -177,8 +176,8 @@ const BestSeller = () => {
             onClick={() => handleTab("sale")}
             className={`${
               activeTab === "sale"
-                ? "text-red-600 border-b-4 border-red-600 pb-1"
-                : "hover:text-red-600"
+                ? "text-red-600 border-b-4 border-red-600 pb-1 cursor-pointer"
+                : "hover:text-red-600 cursor-pointer"
             }`}
           >
             SALE

@@ -9,12 +9,13 @@ import Beauty from "../pages/Beauty";
 import Collections from "../pages/Collections";
 import ErrorPage from "../components/ErrorPage";
 import ProductDetails from "../pages/ProductDetails";
-import BestSellerPage from "../pages/BestSellerPage";
 import SalePage from "../pages/salePages";
 import BlogDetails from "../pages/BlogDetails";
 import Pages from "../components/Pages";
 import BestSeller from "../components/BestSeller";
 import About from "../pages/About";
+import Blog from "../pages/Blog";
+import Catalog from "../components/Catalog";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "shop",
         element: <Shop />,
+      },
+      {
+        path: "blog",
+        element: <Blog />,
+      },
+      {
+        path: "catalog",
+        element: <Catalog />,
       },
       {
         path: "about",
@@ -59,8 +68,8 @@ const router = createBrowserRouter([
         element: <Pages />,
       },
       {
-          path: "collection",
-          element:<Collections/>
+        path: "collection",
+        element: <Collections />,
       },
       {
         path: "product/:id",
@@ -70,10 +79,7 @@ const router = createBrowserRouter([
         path: "/bestseller",
         element: <BestSeller />,
       },
-      {
-        path: "/best-seller",
-        element: <BestSellerPage />,
-      },
+
       {
         path: "/sale",
         element: <SalePage />,

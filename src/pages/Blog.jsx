@@ -84,7 +84,7 @@ const blogData = [
   },
 ];
 
-export default function BlogSection() {
+export default function Blog() {
   const itemsPerPage = 6;
   const [page, setPage] = useState(1);
 

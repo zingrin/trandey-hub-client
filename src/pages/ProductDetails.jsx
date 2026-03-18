@@ -10,8 +10,11 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("description");
 
+  // ⭐ REVIEW STATES
+  const [reviews, setReviews] = useState([]);
+  const [reviewText, setReviewText] = useState("");
+
   useEffect(() => {
-    // Fetch single product from API
     const fetchProduct = async () => {
       try {
         const res = await fetch(`http://localhost:5000/api/products/${id}`);
@@ -27,12 +30,42 @@ export default function ProductDetails() {
     fetchProduct();
   }, [id]);
 
+  // ADD REVIEW
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+
+    if (!reviewText.trim()) return;
+
+    const newReview = {
+      id: Date.now(),
+      text: reviewText,
+    };
+
+    setReviews([...reviews, newReview]);
+    setReviewText("");
+  };
+
+  // DELETE REVIEW
+  const handleDeleteReview = (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    if (!confirmDelete) return;
+
+    const filtered = reviews.filter((rev) => rev.id !== id);
+    setReviews(filtered);
+  };
+
   if (loading) {
-    return <div className="text-center py-20 text-xl text-gray-600">Loading...</div>;
+    return (
+      <div className="text-center py-20 text-xl text-gray-600">Loading...</div>
+    );
   }
 
   if (!product) {
-    return <div className="text-center py-20 text-xl text-gray-600">Product not found!</div>;
+    return (
+      <div className="text-center py-20 text-xl text-gray-600">
+        Product not found!
+      </div>
+    );
   }
 
   return (
@@ -40,7 +73,7 @@ export default function ProductDetails() {
       {/* BACK BUTTON */}
       <button
         onClick={() => navigate("/")}
-        className="mb-6 px-4 py-2 bg-[#447db3] text-white rounded-lg hover:bg-[#376691]"
+        className="mb-6 px-4 py-2 bg-[#447db3] text-white rounded-lg hover:bg-[#376691] cursor-pointer"
       >
         ← Back Home
       </button>
@@ -62,8 +95,16 @@ export default function ProductDetails() {
           <p className="mt-1 text-gray-500">{product.category}</p>
 
           <div className="mt-4 flex items-center gap-4">
-            <h2 className="text-4xl font-bold text-[#447db3]">${product.price}</h2>
-            <span className="line-through text-gray-400 text-xl">${product.oldPrice}</span>
+            <h2 className="text-4xl font-bold text-[#447db3]">
+              ${product.price}
+            </h2>
+
+            {/* optional oldPrice */}
+            {product.oldPrice && (
+              <span className="line-through text-gray-400 text-xl">
+                ${product.oldPrice}
+              </span>
+            )}
           </div>
 
           <div className="mt-4 flex items-center text-gray-600 gap-2">
@@ -82,7 +123,11 @@ export default function ProductDetails() {
           </div>
 
           <div className="mt-6 flex gap-4">
-            <input type="number" defaultValue={1} className="w-20 border p-3 rounded-lg" />
+            <input
+              type="number"
+              defaultValue={1}
+              className="w-20 border p-3 rounded-lg"
+            />
             <button className="flex-1 bg-[#447db3] text-white py-3 rounded-lg hover:bg-[#376691]">
               Add To Cart
             </button>
@@ -92,7 +137,7 @@ export default function ProductDetails() {
             Category: <span className="text-gray-700">{product.category}</span>
           </p>
 
-          {/* ⭐ SHARE SECTION */}
+          {/* SHARE */}
           <div className="mt-6">
             <p className="font-medium text-gray-700">Share Our Product:</p>
             <div className="flex gap-3 mt-2">
@@ -100,23 +145,25 @@ export default function ProductDetails() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-[#447db3] text-[#447db3] hover:bg-[#447db3] hover:text-white transition"
+                className="p-2 rounded-full border border-[#447db3] text-[#447db3] hover:bg-[#447db3] hover:text-white"
               >
                 <FaFacebookF />
               </a>
+
               <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-[#447db3] text-[#447db3] hover:bg-[#447db3] hover:text-white transition"
+                className="p-2 rounded-full border border-[#447db3] text-[#447db3] hover:bg-[#447db3] hover:text-white"
               >
                 <FaTwitter />
               </a>
+
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-[#447db3] text-[#447db3] hover:bg-[#447db3] hover:text-white transition"
+                className="p-2 rounded-full border border-[#447db3] text-[#447db3] hover:bg-[#447db3] hover:text-white"
               >
                 <FaLinkedinIn />
               </a>
@@ -125,11 +172,11 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {/* ⭐⭐ TABS ⭐⭐ */}
+      {/* TABS */}
       <div className="mt-16 border-b pb-2 flex gap-6">
         <button
           onClick={() => setActiveTab("description")}
-          className={`pb-2 text-lg ${
+          className={`pb-2 text-lg cursor-pointer ${
             activeTab === "description"
               ? "text-[#447db3] border-b-2 border-[#447db3]"
               : "text-gray-500"
@@ -140,26 +187,67 @@ export default function ProductDetails() {
 
         <button
           onClick={() => setActiveTab("reviews")}
-          className={`pb-2 text-lg ${
+          className={`pb-2 text-lg cursor-pointer ${
             activeTab === "reviews"
               ? "text-[#447db3] border-b-2 border-[#447db3]"
               : "text-gray-500"
           }`}
         >
-          Reviews (0)
+          Reviews ({reviews.length})
         </button>
       </div>
 
-      {/* TAB CONTENT */}
+      {/* DESCRIPTION */}
       {activeTab === "description" && (
-        <div className="mt-6 text-gray-700 text-lg">{product.description}</div>
+        <div className="mt-6 text-gray-700 text-lg">{product.desc}</div>
       )}
 
+      {/* REVIEWS */}
       {activeTab === "reviews" && (
-        <div id="reviews-section" className="mt-16">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Reviews (0)</h2>
-          <p className="text-gray-600">There are no reviews yet.</p>
-          {/* Review form could be added here */}
+        <div className="mt-10">
+          <h2 className="text-2xl font-semibold mb-4">
+            Reviews ({reviews.length})
+          </h2>
+
+          {/* FORM */}
+          <form onSubmit={handleReviewSubmit} className="mb-6">
+            <textarea
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+              placeholder="Write your review..."
+              className="w-full border p-3 rounded-lg"
+              rows="4"
+            />
+            <button
+              type="submit"
+              className="mt-3 px-6 py-2 bg-[#447db3] text-white rounded-lg cursor-pointer"
+            >
+              Submit Review
+            </button>
+          </form>
+
+          {/* LIST */}
+          {reviews.length === 0 ? (
+            <p className="text-gray-500">No reviews yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {reviews.map((rev) => (
+                <div
+                  key={rev.id}
+                  className="border p-3 rounded-lg bg-gray-50 flex justify-between items-center"
+                >
+                  <p>{rev.text}</p>
+
+                  <button
+                    onClick={() => handleDeleteReview(rev.id)}
+                    className="ml-4 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

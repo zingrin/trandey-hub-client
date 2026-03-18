@@ -18,7 +18,9 @@ const BestSellerCard = ({ image, name, oldPrice, newPrice }) => {
           <p className="text-pink-600 font-bold text-lg">${newPrice}</p>
         </div>
 
-        <button className="btn btn-error w-full mt-4 text-white">Add To Cart</button>
+        <button className="btn btn-error w-full mt-4 text-white">
+          Add To Cart
+        </button>
       </div>
     </div>
   );

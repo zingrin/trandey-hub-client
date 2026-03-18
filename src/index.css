@@ -19,3 +19,8 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+body {
+  font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
