@@ -14,8 +14,8 @@ const BestSellerCard = ({ image, name, oldPrice, newPrice }) => {
         </h2>
 
         <div className="mt-1 flex items-center gap-2">
-          <p className="text-gray-400 line-through text-sm">${oldPrice}</p>
-          <p className="text-pink-600 font-bold text-lg">${newPrice}</p>
+          <p className="text-gray-600 line-through text-sm">${oldPrice}</p>
+          <p className="text-red-600 font-bold text-lg">${newPrice}</p>
         </div>
 
         <button className="btn btn-error w-full mt-4 text-white">
