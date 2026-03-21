@@ -1,3 +1,6 @@
+import { Link } from "react-router";
+import { products } from "../data/productsData";
+
 const BestSellerCard = ({ image, name, oldPrice, newPrice }) => {
   return (
     <div className="rounded-xl p-4 bg-transparent border border-gray-200 hover:shadow-md duration-300">
@@ -18,9 +21,11 @@ const BestSellerCard = ({ image, name, oldPrice, newPrice }) => {
           <p className="text-red-600 font-bold text-lg">${newPrice}</p>
         </div>
 
-        <button className="btn btn-error w-full mt-4 text-white">
-          Add To Cart
-        </button>
+        <Link to={`/bestsellerdetails/${products._id}`} className="w-full">
+          <button className="btn btn-error w-full mt-4 text-white">
+            Add To Cart
+          </button>
+        </Link>
       </div>
     </div>
   );

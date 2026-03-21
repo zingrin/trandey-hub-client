@@ -11,11 +11,11 @@ import ErrorPage from "../components/ErrorPage";
 import ProductDetails from "../pages/ProductDetails";
 import SalePage from "../pages/salePages";
 import BlogDetails from "../pages/BlogDetails";
-import Pages from "../components/Pages";
 import BestSeller from "../components/BestSeller";
 import About from "../pages/About";
 import Blog from "../pages/Blog";
 import Catalog from "../components/Catalog";
+import BestSellerDetails from "../pages/BestSellerDetails";
 
 const router = createBrowserRouter([
   {
@@ -63,10 +63,7 @@ const router = createBrowserRouter([
         path: "beauty",
         element: <Beauty />,
       },
-      {
-        path: "pages",
-        element: <Pages />,
-      },
+
       {
         path: "collection",
         element: <Collections />,
@@ -76,8 +73,12 @@ const router = createBrowserRouter([
         element: <ProductDetails />,
       },
       {
-        path: "/bestseller",
+        path: "/",
         element: <BestSeller />,
+      },
+      {
+        path: "/bestsellerdetails/:id",
+        element: <BestSellerDetails />,
       },
 
       {

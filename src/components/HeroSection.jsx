@@ -55,7 +55,6 @@ export default function HeroSection() {
   return (
     <div className="w-full relative">
       <div className="w-full h-[65vh] md:h-[80vh] lg:h-[95vh] relative overflow-hidden group">
-
         {/* IMAGE */}
         <AnimatePresence>
           <motion.img
@@ -77,9 +76,11 @@ export default function HeroSection() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
           className={`absolute top-1/2 -translate-y-1/2
-            ${current.position === "left"
-              ? "left-4 md:left-12 lg:left-20"
-              : "right-4 md:right-12 lg:right-20"}
+            ${
+              current.position === "left"
+                ? "left-4 md:left-12 lg:left-20"
+                : "right-4 md:right-12 lg:right-20"
+            }
             ${current.bg}
             p-4 md:p-8 lg:p-10
             max-w-xs md:max-w-md lg:max-w-lg
@@ -99,7 +100,7 @@ export default function HeroSection() {
             onClick={() => (window.location.href = "/collections")}
             className="mt-2 md:mt-4 px-4 md:px-6 py-2 md:py-3
               border border-red-500 hover:bg-red-500 hover:text-white
-              transition flex items-center gap-2 text-sm md:text-base"
+              transition flex items-center gap-2 text-sm md:text-base cursor-pointer"
           >
             View Collection →
           </motion.button>
@@ -125,9 +126,7 @@ export default function HeroSection() {
 
         {/* NEXT BUTTON */}
         <button
-          onClick={() =>
-            setIndex((prev) => (prev + 1) % slides.length)
-          }
+          onClick={() => setIndex((prev) => (prev + 1) % slides.length)}
           className="
             absolute right-4 top-1/2 -translate-y-1/2 z-10
             w-11 h-11 md:w-12 md:h-12

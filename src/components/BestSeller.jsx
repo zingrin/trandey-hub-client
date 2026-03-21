@@ -98,7 +98,7 @@ const BestSeller = () => {
               disabled={page === 1}
               className="w-10 h-10 flex items-center justify-center rounded-full border text-lg
                  bg-white text-gray-600 border-gray-300
-                 hover:bg-gray-200 disabled:opacity-40"
+                 hover:bg-gray-200 disabled:opacity-40 cursor-pointer"
             >
               &lt;
             </button>
@@ -111,8 +111,8 @@ const BestSeller = () => {
                   onClick={() => setPage(pageNumber)}
                   className={`w-10 h-10 flex items-center justify-center rounded-full border text-sm font-semibold transition ${
                     page === pageNumber
-                      ? "bg-red-500 text-white border-red-500"
-                      : "bg-white text-gray-600 border-gray-300 hover:bg-red-100 hover:text-red-600"
+                      ? "bg-red-500 text-white border-red-500 cursor-pointer"
+                      : "bg-white text-gray-600 border-gray-300 hover:bg-red-100 hover:text-red-600 cursor-pointer"
                   }`}
                 >
                   {pageNumber}
@@ -125,7 +125,7 @@ const BestSeller = () => {
               disabled={page === totalPages}
               className="w-10 h-10 flex items-center justify-center rounded-full border text-lg
                  bg-white text-gray-600 border-gray-300
-                 hover:bg-gray-200 disabled:opacity-40"
+                 hover:bg-gray-200 disabled:opacity-40 cursor-pointer"
             >
               &gt;
             </button>
