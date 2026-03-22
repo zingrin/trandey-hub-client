@@ -14,15 +14,15 @@ const BestSellerDetails = () => {
   console.log("ID:", id);
 
   const [product, setProduct] = useState(null);
+  console.log(product);
   const [reviews, setReviews] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [userRating, setUserRating] = useState(0);
 
   useEffect(() => {
     if (!id) return;
-
-    setLoading(true);
 
     fetch(`http://localhost:5000/api/bestSellers/${id}`)
       .then((res) => {
@@ -42,7 +42,7 @@ const BestSellerDetails = () => {
       });
   }, [id]);
 
-  // ✅ REVIEW SUBMIT
+  // REVIEW SUBMIT
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,7 +84,7 @@ const BestSellerDetails = () => {
     }
   };
 
-  // ✅ LOADING
+  //  LOADING
   if (loading) {
     return (
       <div className="h-screen flex justify-center items-center bg-[#FCF9F3]">
@@ -93,11 +93,11 @@ const BestSellerDetails = () => {
     );
   }
 
-  // ✅ NOT FOUND
+  //  NOT FOUND
   if (!product) {
     return (
       <div className="text-center py-20 text-red-500 font-bold text-xl">
-        Product Not Found ❌
+        Product Not Found
       </div>
     );
   }

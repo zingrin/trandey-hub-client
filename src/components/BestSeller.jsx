@@ -3,6 +3,7 @@ import BestSellerCard from "./BestSellerCard";
 
 const BestSeller = () => {
   const [products, setProducts] = useState([]);
+  console.log(products);
   const [activeTab, setActiveTab] = useState("all");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -85,7 +86,7 @@ const BestSeller = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {currentProducts.map((p) => (
-              <BestSellerCard key={p._id || p.id} {...p} />
+              <BestSellerCard key={p._id || p.id} product={p} />
             ))}
           </div>
         )}

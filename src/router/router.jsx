@@ -77,7 +77,7 @@ const router = createBrowserRouter([
         element: <BestSeller />,
       },
       {
-        path: "/bestsellerdetails/:id",
+        path: "/bestSellerDetails/:id",
         element: <BestSellerDetails />,
       },
 
