@@ -1,142 +1,175 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
-import blogData from "../data/blogData";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 
 export default function BlogDetails() {
   const { id } = useParams();
-  const blog = blogData.find((b) => b.id === Number(id));
+  const [blog, setBlog] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [commentData, setCommentData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  if (!blog) {
-    return <h2 className="text-center py-20 text-xl">Blog not found</h2>;
-  }
+  useEffect(() => {
+    setLoading(true);
 
-  // Older & Newer Posts
-  const olderPost = blogData.find((b) => b.id === blog.id - 1);
-  const newerPost = blogData.find((b) => b.id === blog.id + 1);
+    // Fetch blog
+    fetch(`http://localhost:5000/api/blogs/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setBlog(data);
+        setLoading(false);
+      })
+      .catch(console.error);
+
+    // Fetch comments
+    fetch(`http://localhost:5000/api/blogs/${id}/comments`)
+      .then((res) => res.json())
+      .then((data) => setComments(data))
+      .catch(console.error);
+  }, [id]);
+
+  const handleCommentChange = (e) =>
+    setCommentData({ ...commentData, [e.target.name]: e.target.value });
+
+  const handleCommentSubmit = async () => {
+    if (!commentData.name || !commentData.email || !commentData.message) return;
+
+    await fetch(`http://localhost:5000/api/blogs/${id}/comments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(commentData),
+    });
+
+    setCommentData({ name: "", email: "", message: "" });
+    const updated = await fetch(
+      `http://localhost:5000/api/blogs/${id}/comments`,
+    );
+    setComments(await updated.json());
+  };
+
+  if (loading)
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <p className="text-xl font-bold">Loading...</p>
+      </div>
+    );
+
+  if (!blog)
+    return <p className="text-center py-20 text-red-500">Blog not found</p>;
 
   return (
     <div className="w-full">
-
-      {/* HERO SECTION */}
+      {/* Hero Section */}
       <div
         className="w-full h-[380px] bg-cover bg-center relative flex items-center justify-center"
         style={{ backgroundImage: `url(${blog.image})` }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
-
-        <h1 className="relative text-white text-4xl md:text-5xl font-bold">
+        <h1 className="relative text-white text-4xl md:text-5xl font-bold text-center px-4">
           {blog.title}
         </h1>
       </div>
 
-      {/* CONTENT */}
+      {/* Blog Content */}
       <div className="max-w-5xl mx-auto py-16 px-6">
-
-        {/* Meta Info */}
-        <div className="flex items-center gap-6 text-gray-600 mb-8 text-sm">
-          <span>📅 {blog.date}</span>
-          <span>💬 {blog.comments}</span>
+        {/* Meta */}
+        <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8 text-sm">
+          <span>📅 {new Date(blog.createdAt).toLocaleDateString()}</span>
+          <span>💬 {comments.length} Comments</span>
           <span>👤 {blog.author}</span>
         </div>
 
-        {/* MAIN TEXT */}
+        {/* Main Text */}
         <div className="space-y-6 text-gray-800 leading-8 text-[17px]">
-
-          <p>
-            Aouvida In oiupis. Weklentesque pos qweseent wnipis. ferean posuere...
-          </p>
-
-          <p className="font-semibold italic border-l-4 border-black pl-4 py-2">
-            “Ridiculus mus mauris vitae ultricies leo vel fringilla...”
-          </p>
-
-          <p>Sapien faucibus et molestie ac feugiat sed lectus...</p>
-          <p>Id semper risus in hendrerit gravida rutrum quisque non tellus...</p>
-          <p>Massa vitae tortor condimentum lacinia quis vel eros donec ac...</p>
-
+          <p>{blog.desc}</p>
         </div>
 
-        {/* SHARE SECTION */}
+        {/* Share */}
         <div className="mt-10">
-          <h3 className="text-lg font-semibold">Share with us:</h3>
-
+          <h3 className="text-lg font-semibold">Share this post:</h3>
           <div className="flex gap-5 text-gray-700 mt-3">
-            <Facebook className="cursor-pointer hover:text-pink-500 duration-200" />
-            <Twitter className="cursor-pointer hover:text-pink-500 duration-200" />
-            <Linkedin className="cursor-pointer hover:text-pink-500 duration-200" />
-            <Instagram className="cursor-pointer hover:text-pink-500 duration-200" />
+            <Facebook className="cursor-pointer hover:text-blue-600 duration-200" />
+            <Twitter className="cursor-pointer hover:text-blue-600 duration-200" />
+            <Linkedin className="cursor-pointer hover:text-blue-600 duration-200" />
+            <Instagram className="cursor-pointer hover:text-blue-600 duration-200" />
           </div>
         </div>
 
-        {/* OLDER / NEWER POSTS */}
+        {/* Older/Newer */}
         <div className="flex justify-between py-14 border-y mt-14">
+          <Link
+            to={blog.prevId ? `/blog/${blog.prevId}` : "#"}
+            className={
+              blog.prevId ? "text-gray-700 hover:text-black" : "text-gray-400"
+            }
+          >
+            ← Older Post
+          </Link>
 
-          {/* Older */}
-          {olderPost ? (
-            <Link
-              to={`/blog/${olderPost.id}`}
-              className="text-gray-700 hover:text-black"
-            >
-              ← Older Post
-            </Link>
-          ) : (
-            <span className="text-gray-400">No Older Post</span>
-          )}
-
-          {/* Newer */}
-          {newerPost ? (
-            <Link
-              to={`/blog/${newerPost.id}`}
-              className="text-gray-700 hover:text-black"
-            >
-              Newer Post →
-            </Link>
-          ) : (
-            <span className="text-gray-400">No Newer Post</span>
-          )}
-
+          <Link
+            to={blog.nextId ? `/blog/${blog.nextId}` : "#"}
+            className={
+              blog.nextId ? "text-gray-700 hover:text-black" : "text-gray-400"
+            }
+          >
+            Newer Post →
+          </Link>
         </div>
 
-
-        {/* COMMENTS SECTION */}
+        {/* Comments */}
         <div className="mt-14">
-          <h3 className="text-2xl font-semibold flex items-center gap-2">
-            💬 1 Comment
+          <h3 className="text-2xl font-semibold mb-6">
+            Comments ({comments.length})
           </h3>
-
-          <div className="border p-6 mt-6">
-            <div className="flex items-center gap-4 text-gray-600 text-sm mb-4">
-              <span>📅 May 12, 2017</span>
-              <span>👤 Joceph Fernando</span>
+          {comments.map((c) => (
+            <div key={c._id} className="border p-6 mb-4 rounded">
+              <div className="flex items-center gap-4 text-gray-600 text-sm mb-2">
+                <span>📅 {new Date(c.date).toLocaleDateString()}</span>
+                <span>👤 {c.name}</span>
+              </div>
+              <p className="text-gray-700">{c.message}</p>
             </div>
-
-            <p className="text-gray-700 leading-7">
-              Laborum et dolorum fuga. Et harum quidem rerum facilis est...
-            </p>
-          </div>
+          ))}
         </div>
 
-        {/* LEAVE COMMENT */}
-        <div className="mt-16">
+        {/* Leave Comment */}
+        <div className="mt-14">
           <h3 className="text-2xl font-semibold mb-6">Leave a comment</h3>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <input type="text" placeholder="Name" className="border p-3 w-full" />
-            <input type="email" placeholder="Email" className="border p-3 w-full" />
+            <input
+              name="name"
+              value={commentData.name}
+              onChange={handleCommentChange}
+              placeholder="Name"
+              className="border p-3 w-full"
+            />
+            <input
+              name="email"
+              value={commentData.email}
+              onChange={handleCommentChange}
+              placeholder="Email"
+              className="border p-3 w-full"
+            />
           </div>
-
           <textarea
+            name="message"
+            value={commentData.message}
+            onChange={handleCommentChange}
             rows="5"
             placeholder="Message"
             className="border p-3 w-full"
           />
-
-          <button className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 mt-4 float-right rounded">
-            Post comment
+          <button
+            onClick={handleCommentSubmit}
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 mt-4 float-right rounded cursor-pointer ml-10"
+          >
+            Post Comment
           </button>
         </div>
-
       </div>
     </div>
   );

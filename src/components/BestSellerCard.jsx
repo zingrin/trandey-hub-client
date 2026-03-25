@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 
 const BestSellerCard = ({ product }) => {
-  console.log(product);
   return (
     <div className="rounded-xl p-4 bg-transparent border border-gray-200 hover:shadow-md duration-300">
       <div className="relative w-full h-60 bg-gray-50 rounded-lg overflow-hidden">

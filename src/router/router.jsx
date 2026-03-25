@@ -3,7 +3,6 @@ import MainLayouts from "../layouts/MainLayouts";
 
 import Home from "../pages/Home";
 import Shop from "../pages/Shop";
-import Gadget from "../pages/Gadget";
 import Jewellery from "../pages/Jewellery";
 import Beauty from "../pages/Beauty";
 import Collections from "../pages/Collections";
@@ -16,6 +15,10 @@ import About from "../pages/About";
 import Blog from "../pages/Blog";
 import Catalog from "../components/Catalog";
 import BestSellerDetails from "../pages/BestSellerDetails";
+import CartPage from "../components/CartPage";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsConditions from "../pages/TermsConditions";
+import ReturnRefundPolicy from "../pages/ReturnRefundPolicy";
 
 const router = createBrowserRouter([
   {
@@ -51,10 +54,7 @@ const router = createBrowserRouter([
         path: "collections",
         element: <Collections />,
       },
-      {
-        path: "gadget",
-        element: <Gadget />,
-      },
+
       {
         path: "jewellery",
         element: <Jewellery />,
@@ -80,7 +80,14 @@ const router = createBrowserRouter([
         path: "/bestSellerDetails/:id",
         element: <BestSellerDetails />,
       },
-
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
+      {
+        path: "/cart/:id",
+        element: <CartPage />,
+      },
       {
         path: "/sale",
         element: <SalePage />,
@@ -89,6 +96,11 @@ const router = createBrowserRouter([
         path: "/blog/:id",
         element: <BlogDetails />,
       },
+      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+
+      { path: "/terms-conditions", element: <TermsConditions /> },
+
+      { path: "/return-refund-policy", element: <ReturnRefundPolicy /> },
     ],
   },
 ]);

@@ -9,7 +9,7 @@ export default function CollectionsPage() {
 
   const productsPerPage = 6;
 
-  // 🔥 API CALL
+  //  API CALL
   useEffect(() => {
     fetch("http://localhost:5000/products")
       .then((res) => res.json())
@@ -48,7 +48,7 @@ export default function CollectionsPage() {
 
   return (
     <div className="w-full">
-      {/* ✔ TOP HERO SECTION WITH BACKGROUND IMAGE */}
+      {/*  TOP HERO SECTION WITH BACKGROUND IMAGE */}
       <div className="w-full h-[250px] md:h-[350px] lg:h-[420px] relative">
         <img
           src="https://i.ibb.co.com/4wXk6Pz5/online-trends-53876-167072.jpg"
@@ -63,7 +63,7 @@ export default function CollectionsPage() {
         </div>
       </div>
 
-      {/* ✔ MAIN CONTENT */}
+      {/*  MAIN CONTENT */}
       <div className="w-full flex gap-10 px-6 md:px-12 mt-10">
         {/* ---------------- LEFT SIDEBAR ---------------- */}
         <div className="w-[25%] hidden md:block">

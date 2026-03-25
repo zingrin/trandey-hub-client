@@ -4,7 +4,6 @@ import Features from "./Features";
 import Newsletter from "../components/Newsletter";
 import PremiumCollection from "../components/PremiumCollection";
 import BestSeller from "../components/BestSeller";
-import TrendingProducts from "../components/TrendingProducts";
 
 const Home = () => {
   return (
@@ -12,7 +11,7 @@ const Home = () => {
       <HeroSection />
       <PremiumCollection />
       <BestSeller />
-      <TrendingProducts />
+      {/* <TrendingProducts /> */}
       {/* <TrendyHero/> */}
       {/* <BlogSection/> */}
       <Features />

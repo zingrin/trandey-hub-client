@@ -3,7 +3,6 @@ import BestSellerCard from "./BestSellerCard";
 
 const BestSeller = () => {
   const [products, setProducts] = useState([]);
-  console.log(products);
   const [activeTab, setActiveTab] = useState("all");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);

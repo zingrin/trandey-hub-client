@@ -1,26 +1,56 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router";
+import { useParams, Link, useNavigate } from "react-router";
 import {
   FaStar,
   FaShoppingCart,
   FaPlus,
   FaMinus,
   FaArrowLeft,
+  FaHeart,
 } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const BestSellerDetails = () => {
   const { id } = useParams();
-  console.log("ID:", id);
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
-  console.log(product);
   const [reviews, setReviews] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [userRating, setUserRating] = useState(0);
 
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const exists = storedCart.find((item) => item._id === product._id);
+
+    if (exists) {
+      exists.quantity += quantity;
+    } else {
+      storedCart.push({
+        _id: product._id,
+        name: product.name,
+        image: product.image,
+        price: product.newPrice,
+        quantity,
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(storedCart));
+
+    Swal.fire({
+      icon: "success",
+      title: "Added to Cart!",
+      text: `${product.name} has been added to your cart.`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
+    navigate("/cart");
+  };
+  // FETCH PRODUCT DETAILS
   useEffect(() => {
     if (!id) return;
 
@@ -30,8 +60,6 @@ const BestSellerDetails = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("PRODUCT:", data);
-
         setProduct(data);
         setReviews(data.reviews || []);
         setLoading(false);
@@ -76,7 +104,6 @@ const BestSellerDetails = () => {
         setReviews([newReview, ...reviews]);
         form.reset();
         setUserRating(0);
-
         Swal.fire("Success", "Review Added!", "success");
       }
     } catch (err) {
@@ -84,7 +111,7 @@ const BestSellerDetails = () => {
     }
   };
 
-  //  LOADING
+  // LOADING STATE
   if (loading) {
     return (
       <div className="h-screen flex justify-center items-center bg-[#FCF9F3]">
@@ -93,7 +120,7 @@ const BestSellerDetails = () => {
     );
   }
 
-  //  NOT FOUND
+  // PRODUCT NOT FOUND
   if (!product) {
     return (
       <div className="text-center py-20 text-red-500 font-bold text-xl">
@@ -119,19 +146,19 @@ const BestSellerDetails = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
-        {/* Image */}
-        <div className="bg-white p-10 rounded-3xl shadow-sm flex justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+        {/* Image - LEFT SIDE FULL */}
+        <div className="w-full h-screen">
           <img
             src={product.image}
             alt={product.name}
-            className="max-h-[400px] object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
 
         {/* Info */}
-        <div>
-          <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
+        <div className="p-10 flex flex-col justify-center">
+          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
 
           <div className="flex items-center gap-2 mb-4 text-orange-500">
             {[...Array(5)].map((_, i) => (
@@ -143,7 +170,7 @@ const BestSellerDetails = () => {
           </div>
 
           <div className="mb-6">
-            <span className="text-4xl font-bold text-yellow-700">
+            <span className="text-3xl font-bold text-red-700">
               ${product.newPrice}
             </span>
             <span className="ml-3 line-through text-gray-400">
@@ -155,25 +182,42 @@ const BestSellerDetails = () => {
 
           {/* Quantity */}
           <div className="flex gap-4 items-center mb-6">
-            <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+            <button
+              className="cursor-pointer"
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            >
               <FaMinus />
             </button>
 
             <span>{quantity}</span>
 
-            <button onClick={() => setQuantity(quantity + 1)}>
+            <button
+              className="cursor-pointer"
+              onClick={() => setQuantity(quantity + 1)}
+            >
               <FaPlus />
             </button>
           </div>
 
-          <button className="bg-red-500 text-white px-6 py-3 rounded-xl flex items-center gap-2">
-            Add to Cart <FaShoppingCart />
-          </button>
+          {/* Add to Cart + Wishlist */}
+          <div className="flex items-center gap-4 flex-nowrap">
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className="bg-red-500 text-white px-6 h-12 rounded-xl flex items-center gap-2 whitespace-nowrap cursor-pointer"
+            >
+              Add to Cart <FaShoppingCart />
+            </button>
+
+            <button className="border border-red-500 text-red-500 px-4 h-12 rounded-xl flex items-center gap-2 whitespace-nowrap hover:bg-red-500 hover:text-white transition cursor-pointer">
+              <FaHeart /> Wishlist
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Reviews */}
-      <div className="grid lg:grid-cols-2 gap-10">
+      <div className="grid lg:grid-cols-2 gap-10 mt-10">
         <div>
           <h2 className="text-2xl font-bold mb-6">
             Reviews ({reviews.length})
@@ -182,7 +226,7 @@ const BestSellerDetails = () => {
           {reviews.length === 0 && <p>No reviews yet</p>}
 
           {reviews.map((r, i) => (
-            <div key={i} className="mb-4 border-b pb-3">
+            <div key={i} className="mb-4 border-b border-gray-300 pb-3">
               <h4 className="font-bold">{r.name}</h4>
               <p className="text-sm text-gray-400">{r.date}</p>
               <p>{r.comment}</p>
@@ -197,7 +241,8 @@ const BestSellerDetails = () => {
           <input
             name="userName"
             placeholder="Name"
-            className="w-full mb-3 p-2 border"
+            className="w-full mb-3 p-2 border border-gray-300 rounded outline-none 
+             focus:border-red-500 focus:ring-2 focus:ring-red-300 transition duration-300"
             required
           />
 
@@ -206,9 +251,9 @@ const BestSellerDetails = () => {
               <FaStar
                 key={s}
                 onClick={() => setUserRating(s)}
-                className={
+                className={`cursor-pointer ${
                   s <= userRating ? "text-orange-500" : "text-gray-300"
-                }
+                }`}
               />
             ))}
           </div>
@@ -216,11 +261,16 @@ const BestSellerDetails = () => {
           <textarea
             name="comment"
             placeholder="Comment"
-            className="w-full mb-3 p-2 border"
+            className="w-full mb-3 p-2 border border-gray-300 rounded outline-none 
+             focus:border-red-500 focus:ring-2 focus:ring-red-300 transition duration-300"
             required
           />
 
-          <button className="bg-red-500 text-white px-5 py-2 rounded">
+          <button
+            className="bg-red-500 text-white px-5 py-2 rounded 
+                   hover:bg-red-600 hover:shadow-lg hover:shadow-red-300 
+                   transition duration-300"
+          >
             Submit
           </button>
         </form>
